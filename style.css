@@ -4,6 +4,80 @@ body {
   background: #f8f8f8;
   margin: 0;
   padding: 0;
+   font-family: 'Kosugi Maru', 'Noto Sans JP', sans-serif;
+}
+h1 {
+  color: #555;
+}
+/* タイトル */
+h2 {
+  font-size: 1.4rem;
+  color: #ff69b4;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  color: #000000;
+  margin-top: 0.5rem;
+}
+/* 名前の下のアイコン */
+.my-icon {
+  width: 100px;           /* 大きさ調整 */
+  height: 100px;
+  border-radius: 50%;     /* 丸くする */
+  object-fit: cover;      /* 画像を中央で切り抜き */
+  border: 3px solid #ff69b4;  /* ピンク枠で可愛く */
+  margin: 10px auto;      /* 上下余白＆中央寄せ */
+  display: block;         /* 中央寄せ用 */
+}
+
+/* リスト全体 */
+#events-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 各項目のレイアウト */
+#events-list li {
+  display: flex;
+  align-items: center;
+  background: #fff0f5;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(255, 105, 180, 0.2);
+  transition: transform 0.2s ease;
+}
+
+#events-list li:hover {
+  transform: translateY(-2px);
+}
+
+/* 開催日 */
+.event-date {
+  font-size: 0.9rem;
+  color: #888;
+  margin-right: 12px;
+  min-width: 80px;
+}
+
+/* 画像（丸型） */
+.event-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ff69b4;
+  margin-right: 12px;
+}
+
+/* 現場名 */
+.event-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ff1493;
 }
 
 .avatar {
@@ -49,7 +123,15 @@ body {
   margin-top: 8px;
   font-weight: bold;
 }
+/* 栗栖むぎ用（薄い黄色） */
+.bg-mugi {
+  background-color: #fffbea; /* ほんのり黄色 */
+}
 
+/* 那蘭のどか用（薄いピンク） */
+.bg-nodoka {
+  background-color: #fff0f5; /* 薄いピンク */
+}
 .back-link { display: inline-block; margin: 16px; text-decoration: none; color: #555; }
 .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
 .avatar.lg { width: 160px; height: 160px; }

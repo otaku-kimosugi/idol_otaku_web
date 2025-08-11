@@ -8,10 +8,33 @@
 <body>
   <main>
     <section class="center">
-      <h1 id="site-title">あなたの名前</h1>
-      <p class="tagline">キャッチコピー / 自己紹介など</p>
+      <h1 id="site-title">こーきのプロフィールブログ</h1>
+      <h1>My <a href="https://x.com/kk_mgnd">X</a> account</h1>
+      <img src="/images/koki.jpg" alt="あなたのアイコン" class="my-icon">
+      <p class="tagline">2025年にアイドルオタクになる。最初はiLiFE!の那蘭のどかにお熱だったが最近はメッキリiON!の栗栖むぎに推しチェン。<br>
+      だからといってのどかを応援していない訳ではない。一生懸命頑張る、元気をくれるアイドルをこれからも応援していきたい。</p>
     </section>
 
+     <hr>
+
+    <h2>参加した現場</h2>
+<ul id="events-list">
+  <li data-date="2025-07-19">
+    <span class="event-date">2025/07/19</span>
+    <img src="/images/ion!.jpg" alt="" class="event-icon">
+    <span class="event-name">関ケ原唄姫合戦2025</span>
+  </li>
+  <li data-date="2025-06-23">
+    <span class="event-date">2025/06/23</span>
+    <img src="/images/ilife!.jpg" alt="" class="event-icon">
+    <span class="event-name">HEROINES FES in NAGOYA</span>
+  </li>
+  <li data-date="2025-06-10">
+    <span class="event-date">2025/06/10</span>
+    <img src="/images/ilife!.jpg" alt="" class="event-icon">
+    <span class="event-name">COLNE BIG LOVE!!</span>
+  </li>
+</ul>
     <hr>
 
     <section>
@@ -19,19 +42,39 @@
       <div class="grid cards-2">
         <!-- 那蘭のどか -->
         <a href="nodoka.html" class="card">
-          <img class="avatar x-avatar" alt="那蘭のどか" data-username="ilife_nara">
+          <img class="avatar x-avatar" alt="那蘭のどか" src="images/naranodoka.jpg" data-username="ilife_nara">
           <div class="name">那蘭のどか</div>
           <div class="tagline">@ilife_nara</div>
         </a>
         <!-- 栗栖むぎ -->
         <a href="mugi.html" class="card">
-          <img class="avatar x-avatar" alt="栗栖むぎ" data-username="ion_mugi">
+          <img class="avatar x-avatar" alt="栗栖むぎ" src="images/kurisumugi.jpeg" data-username="ion_mugi">
           <div class="name">栗栖むぎ</div>
           <div class="tagline">@ion_mugi</div>
         </a>
       </div>
     </section>
   </main>
-  <script src="script.js"></script>
+  <script src="script.js">
+document.addEventListener("DOMContentLoaded", () => {
+  const list = document.getElementById("events-list");
+  const items = Array.from(list.querySelectorAll("li"));
+  
+  items.sort((a, b) => {
+    const da = new Date(a.dataset.date);
+    const db = new Date(b.dataset.date);
+    return db - da; // 新しい日付が上
+  });
+
+  list.innerHTML = "";
+  items.forEach(item => list.appendChild(item));
+});
+  </script>
+
+  <footer>
+    <p>© 2025</p>
+    <p>このサイトは個人の趣味で作成されたもので、公式とは関係ありません。</p>
+    <p>アイドルの最新情報は公式サイトやSNSをご確認ください。</p>
+  </footer>
 </body>
 </html>

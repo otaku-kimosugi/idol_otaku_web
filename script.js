@@ -100,7 +100,30 @@ async function mountTweets(container) {
   }
 }
 
+async function mountAvatar(imgEl) {
+  const username = imgEl.dataset.username;          // 例: ion_mugi
+  if (!username) return;
+  try {
+    const res = await fetch(`./user_${username}.json`, { cache: "no-store" });
+    if (!res.ok) return;
+    const u = await res.json();
+    if (u.profile_image_url) imgEl.src = u.profile_image_url;
+    // 名前もJSONの値で上書きしたいときはここで
+    const nameElId = imgEl.dataset.nameTarget; // 例: "#mugi-name"
+    if (nameElId) {
+      const t = document.querySelector(nameElId);
+      if (t && u.name) t.textContent = u.name;
+    }
+  } catch (e) {
+    console.warn("avatar load failed", username, e);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  // ツイート
   const box = document.getElementById("tweets");
-  if (box) mountTweets(box); // こっちを使う
+  if (box) mountTweets(box);
+
+  // アイコン（ページ内に複数あってもOK）
+  document.querySelectorAll(".x-avatar").forEach(mountAvatar);
 });
