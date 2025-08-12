@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>俺のプロフ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-profile">
+  <a class="back" href="index.html">← 戻る</a>
+
+  <main class="container">
+    <!-- ヒーロー -->
+    <header class="profile-hero">
+      <img src="/images/koki.jpg" alt="プロフィール" class="my-icon xl" />
+      <h1 class="my-name">こーき</h1>
+      <p><a href="https://x.com/kk_mgnd">@kk_mgnd</a></p>
+      <p>前の彼女の影響でアイドル気になり始めて結果がこれ。</p>
+
+      <div class="chip-row">
+        <a class="chip" href="nodoka.html">那蘭のどか</a>
+        <a class="chip" href="mugi.html">栗栖むぎ</a>
+      </div>
+    </header>
+
+    <!-- ステータス -->
+    <section class="stat-cards">
+      <article class="stat-card">
+        <div class="stat-num" id="stat-total" data-count="0">0</div>
+        <div class="stat-label">累計現場</div>
+    </article>
+      <article class="stat-card">
+        <div class="stat-num" data-count="2">0</div>
+        <div class="stat-label">推し人数</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-num" id="stat-this-month" data-count="0">0</div>
+        <div class="stat-label">今月の現場</div>
+      </article>
+    </section>
+
+    <!-- 自己紹介 -->
+    <section class="card">
+    <h2>自己紹介</h2>
+    <ul class="about-list">
+        <li>拠点：名古屋</li>
+        <li>年齢：23</li>
+        <li>趣味：ゲーム, 筋トレ, Web系のプログラミング</li>
+        <li>ゲーム：VALORANT, Genshin Inpact</li>
+        <li>好きなもの：キヨ</li>
+    </ul>
+    </section>
+
+    <!-- 直近の現場 -->
+    <section class="card">
+      <h2>現場</h2>
+      <ul class="timeline">
+        <li>
+          <time>2025/08/23</time>
+          <span class="dot ion"></span>
+           <img src="/images/ion!.jpg" alt="" class="event-icon">
+            <span class="tl-name">HEROINES SUMMER extra!!!</span>
+        </li>
+        <li>
+          <time>2025/07/19</time>
+          <span class="dot ion"></span>
+           <img src="/images/ion!.jpg" alt="" class="event-icon">
+            <span class="tl-name">関ケ原唄姫合戦2025</span>
+        </li>
+        <li>
+          <time>2025/06/23</time>
+          <span class="dot nara"></span>
+          <img src="/images/ilife!.jpg" alt="" class="event-icon">
+        <span class="tl-name">HEROINES FES in NAGOYA</span>
+        </li>
+        <li>
+          <time>2025/06/10</time>
+          <span class="dot nara"></span>
+          <img src="/images/ilife!.jpg" alt="" class="event-icon">
+          <span class="tl-name">COLNE BIG LOVE!!</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- リンク -->
+    <section class="card">
+      <h2>リンク</h2>
+      <div class="links">
+        <a href="https://x.com/ion_mugi" target="_blank" rel="noreferrer">X（むぎ）</a>
+        <a href="https://x.com/ilife_nara" target="_blank" rel="noreferrer">X（のどか）</a>
+        <a href="mailto:you@example.com">メール</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+<script>
+  // 'YYYY/MM/DD' を確実にパース
+  function parseYMD(s) {
+    const [y, m, d] = s.trim().split(/[\/\-\.]/).map(n => parseInt(n, 10));
+    if (!y || !m || !d) return null;
+    return new Date(y, m - 1, d);
+  }
+
+  // 今月の現場
+  function updateThisMonthCount() {
+    const now = new Date();
+    const Y = now.getFullYear();
+    const M = now.getMonth();
+    let cnt = 0;
+    document.querySelectorAll('.timeline time').forEach(t => {
+      const dt = parseYMD(t.textContent);
+      if (dt && dt.getFullYear() === Y && dt.getMonth() === M) cnt++;
+    });
+    const el = document.getElementById('stat-this-month');
+    if (el) { el.dataset.count = String(cnt); el.textContent = '0'; }
+  }
+
+  // 累計現場＝タイムラインの件数
+  function updateTotalCount() {
+    const total = document.querySelectorAll('.timeline li').length;
+    const el = document.getElementById('stat-total');
+    if (el) { el.dataset.count = String(total); el.textContent = '0'; }
+  }
+
+  // カウントアップ
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  function runCounters(){
+    document.querySelectorAll('.stat-num').forEach(el=>{
+      const target = Number(el.dataset.count || 0);
+      const start = performance.now();
+      function tick(now){
+        const p = Math.min(1, (now - start)/900);
+        el.textContent = Math.round(ease(p) * target);
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // まず数値をセット
+    updateThisMonthCount();
+    updateTotalCount();
+
+    // 画面に入ったらカウント開始
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ runCounters(); io.disconnect(); }});
+    },{threshold:0.4});
+    io.observe(document.querySelector('.stat-cards'));
+  });
+</script>
+</body>
+</html>

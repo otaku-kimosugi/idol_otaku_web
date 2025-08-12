@@ -9,7 +9,7 @@
   <main>
     <section class="center">
       <h1 id="site-title">こーきのプロフィールブログ</h1>
-      <h1>My <a href="https://x.com/kk_mgnd">X</a> account</h1>
+      <a href="shosai.html">詳細(私のステータスです。)</a>
       <img src="/images/koki.jpg" alt="あなたのアイコン" class="my-icon">
       <p class="tagline">2025年にアイドルオタクになる。最初はiLiFE!の那蘭のどかにお熱だったが最近はメッキリiON!の栗栖むぎに推しチェン。<br>
       だからといってのどかを応援していない訳ではない。一生懸命頑張る、元気をくれるアイドルをこれからも応援していきたい。</p>
@@ -39,20 +39,23 @@
 
     <section>
       <h2>推し</h2>
-      <div class="grid cards-2">
-        <!-- 那蘭のどか -->
-        <a href="nodoka.html" class="card">
-          <img class="avatar x-avatar" alt="那蘭のどか" src="images/naranodoka.jpg" data-username="ilife_nara">
-          <div class="name">那蘭のどか</div>
-          <div class="tagline">@ilife_nara</div>
-        </a>
-        <!-- 栗栖むぎ -->
-        <a href="mugi.html" class="card">
-          <img class="avatar x-avatar" alt="栗栖むぎ" src="images/kurisumugi.jpeg" data-username="ion_mugi">
-          <div class="name">栗栖むぎ</div>
-          <div class="tagline">@ion_mugi</div>
-        </a>
-      </div>
+<div class="oshi-cards">
+  <a class="oshi-card" href="nodoka.html">
+    <img class="avatar" src="images/naranodoka.jpg" alt="那蘭のどか"> <!-- ここは任意の画像でOK。JSで自動差し替えなら data-username でも可 -->
+    <div class="oshi-meta">
+      <div class="oshi-display">那蘭のどか</div>
+      <div class="oshi-handle">@ilife_nara</div>
+    </div>
+  </a>
+
+  <a class="oshi-card" href="mugi.html">
+    <img class="avatar" src="images/kurisumugi.jpeg" alt="栗栖むぎ">
+    <div class="oshi-meta">
+      <div class="oshi-display">栗栖むぎ</div>
+      <div class="oshi-handle">@ion_mugi</div>
+    </div>
+  </a>
+</div>
     </section>
   </main>
   <script src="script.js">
