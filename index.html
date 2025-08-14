@@ -16,7 +16,6 @@
     </section>
 
      <hr>
-
     <h2>参加した現場</h2>
 <ul id="events-list">
   <li data-date="2025-07-19">
@@ -38,40 +37,27 @@
     <hr>
 
     <section>
-      <h2>推し</h2>
-<div class="oshi-cards">
-  <a class="oshi-card" href="nodoka.html">
-    <img class="avatar" src="images/naranodoka.jpg" alt="那蘭のどか"> <!-- ここは任意の画像でOK。JSで自動差し替えなら data-username でも可 -->
-    <div class="oshi-meta">
-      <div class="oshi-display">那蘭のどか</div>
-      <div class="oshi-handle">@ilife_nara</div>
-    </div>
-  </a>
+     <h2>推し</h2>
+      <div class="oshi-cards">
+        <a class="oshi-card" href="nodoka.html">
+          <img class="avatar" src="images/naranodoka.jpg" alt="那蘭のどか">
+          <div class="oshi-meta">
+            <div class="oshi-display">那蘭のどか</div>
+            <div class="oshi-handle">@ilife_nara</div>
+          </div>
+        </a>
 
-  <a class="oshi-card" href="mugi.html">
-    <img class="avatar" src="images/kurisumugi.jpeg" alt="栗栖むぎ">
-    <div class="oshi-meta">
-      <div class="oshi-display">栗栖むぎ</div>
-      <div class="oshi-handle">@ion_mugi</div>
-    </div>
-  </a>
-</div>
+        <a class="oshi-card" href="mugi.html">
+          <img class="avatar" src="images/kurisumugi.jpeg" alt="栗栖むぎ">
+          <div class="oshi-meta">
+            <div class="oshi-display">栗栖むぎ</div>
+            <div class="oshi-handle">@ion_mugi</div>
+          </div>
+        </a>
+      </div>
     </section>
   </main>
   <script src="script.js">
-document.addEventListener("DOMContentLoaded", () => {
-  const list = document.getElementById("events-list");
-  const items = Array.from(list.querySelectorAll("li"));
-  
-  items.sort((a, b) => {
-    const da = new Date(a.dataset.date);
-    const db = new Date(b.dataset.date);
-    return db - da; // 新しい日付が上
-  });
-
-  list.innerHTML = "";
-  items.forEach(item => list.appendChild(item));
-});
   </script>
 
   <footer>

@@ -4,6 +4,14 @@ body {
   background: #f8f8f8;
   margin: 0;
   padding: 0;
+  opacity: 0;
+  transform: translateY(-30px); /* 最初は上にずらす */
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+body.page-loaded {
+  opacity: 1;
+  transform: translateY(0); /* 元の位置に戻す */
 }
 
 h1 {
@@ -365,4 +373,135 @@ h3 {
   content: "✨"; /* 項目アイコン */
   margin-right: 8px;
   font-size: 1.2em;
+}
+
+/* ==== 動的演出セット ==== */
+:root{
+  --pink:#ff69b4; --vio:#8a2be2; --soft:#fff0f5; --glow:rgba(255,105,180,.55);
+}
+
+/* タイトルをグラデで */
+#site-title{
+  background: linear-gradient(90deg,var(--pink),#ffc46b,var(--vio));
+  -webkit-background-clip:text; background-clip:text;
+  color: transparent;
+  animation: hueShift 10s linear infinite;
+}
+@keyframes hueShift{ to{ filter:hue-rotate(360deg); } }
+
+/* セクションの波背景 */
+main > section.center{
+  position: relative; overflow: hidden; isolation: isolate;
+}
+main > section.center::after{
+  content:""; position:absolute; inset:auto -20% -30% -20%; height:240px;
+  background: radial-gradient(60% 80% at 50% 0%, #ffeef8 0%, transparent 70%);
+  animation: floatUp 10s ease-in-out infinite alternate;
+  z-index:-1;
+}
+@keyframes floatUp{ from{ transform: translateY(20px);} to{ transform: translateY(-10px);} }
+
+/* ふわっと登場（共通） */
+.reveal{ opacity: 0; transform: translateY(14px); transition:.6s cubic-bezier(.2,.7,.2,1); }
+.reveal.show{ opacity: 1; transform: none; }
+
+/* アバター揺れ＆光彩 */
+.my-icon{
+  position: relative;
+  animation: bob 4.5s ease-in-out infinite;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08), 0 0 0 6px #fff, 0 0 24px var(--glow);
+}
+@keyframes bob{ 0%,100%{ transform: translateY(0)} 50%{ transform: translateY(-6px)} }
+
+/* キラキラ（擬似要素） */
+.my-icon::before,.my-icon::after{
+  content:""; position:absolute; border-radius:50%; pointer-events:none;
+  background: radial-gradient(circle, #fff, rgba(255,255,255,0) 60%);
+  opacity:.9; filter: blur(1px);
+}
+.my-icon::before{ width:16px;height:16px; top:8px; left:10px; animation: sparkle 2.6s infinite; }
+.my-icon::after { width:10px;height:10px; bottom:8px; right:12px; animation: sparkle 2s 1.2s infinite; }
+@keyframes sparkle{ 50%{ transform: scale(1.6) rotate(20deg); opacity:.5 } }
+
+/* 推しカード：チルト＋グロー */
+.oshi-card{
+  transform-style: preserve-3d;
+  background: #fff;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  border:1px solid #f3d7f1;
+}
+.oshi-card:hover{
+  transform: translateY(-4px) rotateX(2deg) rotateY(-2deg);
+  box-shadow: 0 18px 30px rgba(170,60,180,.18), 0 0 0 6px rgba(255,255,255,.8) inset;
+  border-color:#f0bde8;
+}
+
+/* 現場リスト：カード感＆出現ステップ */
+#events-list li{
+  position: relative;
+  background: #fff;
+  border:1px solid #f4d6ea;
+  box-shadow: 0 10px 26px rgba(170,60,180,.08);
+}
+#events-list li.reveal{ transition-delay: calc(var(--i,0) * .07s); }
+
+/* 小さなアクセントライン */
+#events-list li::after{
+  content:""; position:absolute; left:0; bottom:0; width:100%; height:4px;
+  background: linear-gradient(90deg, var(--pink), #ffd36e, var(--vio));
+  opacity:.18; border-radius:0 0 12px 12px;
+}
+
+/* ツイートカードも少し浮かす */
+.tweet-card{ transition: transform .15s ease, box-shadow .15s ease; }
+.tweet-card:hover{ transform: translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.08); }
+
+.confetti{
+  position: fixed; top:0; left:0; width:100%; height:0; pointer-events:none; z-index:9999;
+}
+.confetti span{
+  position:absolute; top:-20px; font-size:20px; animation: fall 1500ms linear forwards;
+}
+@keyframes fall{
+  to{ transform: translateY(110vh) rotate(260deg); opacity:.8; }
+}
+
+/* アニメ控えめ設定（ユーザー設定に追従） */
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important }
+}
+
+/* 推しカード：リンクの下線や既存装飾を完全オフ */
+.oshi-card{
+  display:flex; align-items:center; gap:14px;
+  background:#fff; border:1px solid #f3d7f1; border-radius:16px;
+  padding:12px 14px; text-decoration:none; color:inherit;
+  box-shadow:0 6px 16px rgba(170,60,180,.08);
+  position:relative; overflow:hidden;
+}
+.oshi-card * { text-decoration: none !important; background: transparent !important; }
+
+/* もし他のCSSの擬似要素が乗ってたら強制無効化 */
+.oshi-card::before, .oshi-card::after { display:none !important; }
+
+.oshi-meta{ text-align:left; }
+.oshi-display{ font-weight:800; font-size:1.1rem; line-height:1.2; color:#6a1b9a; }
+.oshi-handle{ margin-top:4px; font-size:.95rem; color:#666; }
+
+/* カードのホバー演出（控えめ） */
+.oshi-card:hover{ transform: translateY(-3px); box-shadow:0 12px 24px rgba(170,60,180,.14); transition:.15s; }
+
+/* 万一 hr がカード直下に当たって帯化してた場合の保険 */
+.oshi-cards + hr, .oshi-card hr { display:none; }
+
+/* ページフェード用 */
+.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
 }
