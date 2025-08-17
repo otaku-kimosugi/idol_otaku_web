@@ -1,25 +1,43 @@
-name: Fetch Tweets
+name: Fetch tweets every 30min
 
 on:
   schedule:
-    - cron: "*/30 * * * *"   # 30分ごとに実行
-  workflow_dispatch:          # 手動実行もできるように
+    - cron: "*/30 * * * *"   # 30分ごと（UTC）
+  workflow_dispatch:         # 手動実行ボタンも出す
+
+permissions:
+  contents: write            # 変更をコミット/プッシュするため
 
 jobs:
-  fetch:
+  update:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 22
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install deps
+        run: |
+          npm ci || npm i
 
-      - name: Run fetch_tweets.js
-        run: node fetch_tweets.js
+      - name: Run fetch script
         env:
-          BEARER: ${{ secrets.TWITTER_BEARER_TOKEN }}
+          # ★ さっき作ったシークレット名と一致させる
+          TWITTER_BEARER: ${{ secrets.TWITTER_BEARER_TOKEN }}
+        run: |
+          # 念のため URLデコードしてから実行
+          export TWITTER_BEARER=$(node -e "console.log(decodeURIComponent(process.env.TWITTER_BEARER||''))")
+          node fetch_tweets.js
+
+      - name: Commit changes if any
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "chore: update tweets ($(date -u +'%Y-%m-%d %H:%M:%S') UTC)"
+          git push
