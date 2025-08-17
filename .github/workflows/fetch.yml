@@ -1,0 +1,25 @@
+name: Fetch Tweets
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # 30分ごとに実行
+  workflow_dispatch:          # 手動実行もできるように
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run fetch_tweets.js
+        run: node fetch_tweets.js
+        env:
+          BEARER: ${{ secrets.TWITTER_BEARER_TOKEN }}
