@@ -135,8 +135,10 @@ async function saveUser(username, outFile) {
   try {
     await saveTweets("ilife_nara", "tweets_ilife_nara.json");
     await saveTweets("ion_mugi",  "tweets_ion_mugi.json");
+    await saveTweets("dreco_rena",  "tweets_dreco_rena.json");
     await saveUser("ilife_nara",  "user_ilife_nara.json");
     await saveUser("ion_mugi",    "user_ion_mugi.json");
+    await saveUser("dreco_rena",    "user_dreco_rena.json");
     console.log("Done.");
   } catch (e) {
     console.error("\n--- ERROR ---\n" + e.message);

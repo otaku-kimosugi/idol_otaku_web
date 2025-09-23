@@ -147,7 +147,9 @@ h3 {
 .bg-nodoka {
   background-color: #fff0f5;
 }
-
+.bg-rena {
+  background-color: #eaf7ff;
+}
 /* 戻るリンク */
 .back-link {
   display: inline-block;
@@ -320,11 +322,14 @@ h3 {
   border: 2px solid #fff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
-.dot.nara {
+.dot.ilife {
   background: #ffb6e6;
 }
 .dot.ion {
   background: #fff59d;
+}
+.dot.dreco {
+  background: #40d948;
 }
 
 /* リンク */
